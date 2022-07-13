@@ -7,8 +7,9 @@ const playerScore = document.querySelector('.score');
 const playerInput = document.querySelector('.guess');
 const checkButton = document.querySelector('.check');
 
+let possibleScore = 20;
+
 // theNumber.textContent = 13;
-// playerScore.textContent = 10;
 
 const secretNumber = Math.trunc(Math.random() * 20 + 1);
 
@@ -22,5 +23,25 @@ checkButton.addEventListener('click', function () {
 
   if (!guess) {
     gameMessage.textContent = '⛔ No Number!';
+  } else if (guess === secretNumber) {
+    gameMessage.textContent = '🎉 Correct Number!';
+  } else if (guess > secretNumber) {
+    if (possibleScore > 1) {
+      gameMessage.textContent = '📈 Too high!';
+      possibleScore--;
+    } else {
+      gameMessage.textContent = '💥 You lost the game!';
+      possibleScore = 0;
+    }
+    playerScore.textContent = possibleScore;
+  } else if (guess < secretNumber) {
+    if (possibleScore > 1) {
+      gameMessage.textContent = '📉 Too low!';
+      possibleScore--;
+    } else {
+      gameMessage.textContent = '💥 You lost the game!';
+      possibleScore = 0;
+    }
+    playerScore.textContent = possibleScore;
   }
 });
