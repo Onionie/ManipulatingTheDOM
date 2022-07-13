@@ -19,7 +19,6 @@ let secretNumber = Math.trunc(Math.random() * 20 + 1);
 checkButton.addEventListener('click', function () {
   // In input fields, it's not textContent, but value
   const guess = Number(playerInput.value);
-  console.log(guess);
 
   // If no input
   if (!guess) {
@@ -39,38 +38,28 @@ checkButton.addEventListener('click', function () {
     // Show secret number
     theNumber.textContent = secretNumber;
 
+    // Set Highscore
     highScoreDiv.textContent = highScore;
   }
 
   // If guess is too high
-  else if (guess > secretNumber) {
+  else if (guess !== secretNumber) {
     if (possibleScore > 1) {
-      gameMessage.textContent = '📈 Too high!';
+      gameMessage.textContent =
+        guess > secretNumber ? '📈 Too high!' : '📉 Too low!';
       possibleScore--;
+      playerScore.textContent = possibleScore;
     } else {
       gameMessage.textContent = '💥 You lost the game!';
       possibleScore = 0;
     }
-    playerScore.textContent = possibleScore;
-  }
-
-  // If guess is too low
-  else if (guess < secretNumber) {
-    if (possibleScore > 1) {
-      gameMessage.textContent = '📉 Too low!';
-      possibleScore--;
-    } else {
-      gameMessage.textContent = '💥 You lost the game!';
-      possibleScore = 0;
-    }
-    playerScore.textContent = possibleScore;
   }
 });
 
 againButton.addEventListener('click', function () {
   console.log('Again is Clicked and working');
   secretNumber = Math.trunc(Math.random() * 20 + 1);
-  theNumber.textContent = secretNumber;
+  theNumber.textContent = '?';
   possibleScore = 20;
   gameMessage.textContent = 'Start guessing...';
   playerScore.textContent = possibleScore;
