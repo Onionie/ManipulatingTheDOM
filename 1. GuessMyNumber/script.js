@@ -4,14 +4,16 @@
 const gameMessage = document.querySelector('.message');
 const theNumber = document.querySelector('.number');
 const playerScore = document.querySelector('.score');
+const highScoreDiv = document.querySelector('.highscore');
 const playerInput = document.querySelector('.guess');
 const againButton = document.querySelector('.again');
 const checkButton = document.querySelector('.check');
 const htmlBody = document.querySelector('body');
 
 let possibleScore = 20;
+let highScore = 0;
 
-const secretNumber = Math.trunc(Math.random() * 20 + 1);
+let secretNumber = Math.trunc(Math.random() * 20 + 1);
 
 // When Check Button is clicked
 checkButton.addEventListener('click', function () {
@@ -26,6 +28,9 @@ checkButton.addEventListener('click', function () {
 
   // If Player wins
   else if (guess === secretNumber) {
+    if (highScore <= possibleScore) {
+      highScore = possibleScore;
+    }
     gameMessage.textContent = '🎉 Correct Number!';
 
     // Manipulate CSS: Turn background color to greenish
@@ -33,6 +38,8 @@ checkButton.addEventListener('click', function () {
 
     // Show secret number
     theNumber.textContent = secretNumber;
+
+    highScoreDiv.textContent = highScore;
   }
 
   // If guess is too high
@@ -62,8 +69,8 @@ checkButton.addEventListener('click', function () {
 
 againButton.addEventListener('click', function () {
   console.log('Again is Clicked and working');
-  const secretNumber = Math.trunc(Math.random() * 20 + 1);
-  theNumber.textContent = '?';
+  secretNumber = Math.trunc(Math.random() * 20 + 1);
+  theNumber.textContent = secretNumber;
   possibleScore = 20;
   gameMessage.textContent = 'Start guessing...';
   playerScore.textContent = possibleScore;
